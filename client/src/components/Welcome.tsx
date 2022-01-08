@@ -1,9 +1,10 @@
-import { FunctionComponent, ChangeEvent, useState } from "react";
+import { FunctionComponent, ChangeEvent, useState, useContext } from "react";
 import { AiFillPayCircle } from "react-icons/ai";
 import { SiEthereum } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
-
+import { TransactionsContext } from "../context/TransactionContext";
 import { Loader } from "./";
+import { ethers } from "ethers";
 interface InputProps {
   placeholder?: string;
   props?: object;
@@ -37,13 +38,23 @@ const Input: FunctionComponent<InputProps> = ({
 
 interface WelcomeProps {}
 const Welcome: FunctionComponent<WelcomeProps> = () => {
-  const connectWallet = () => {};
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement>,
-    name: string = "test"
-  ) => {};
+  const {
+    currentAccount,
+    connectWallet,
+    formData,
+    sendTransaction,
+    handleChange,
+  } = useContext(TransactionsContext);
+
   const [isLoading, setLoading] = useState(false);
-  const handleSubmit = () => {};
+
+  const handleSubmit = (e) => {
+    const { addressTo, amount, keyword, message } = formData;
+
+    e.preventDefault();
+    if (!addressTo || !amount || !keyword || !message) return;
+    sendTransaction();
+  };
   const commonStyles =
     "min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white";
   return (
@@ -58,15 +69,18 @@ const Welcome: FunctionComponent<WelcomeProps> = () => {
             Explore the crypto world. Buy and sell cryptocurrencies easily in
             Krypto
           </p>
-          <button
-            type="button"
-            onClick={connectWallet}
-            className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-3 rounded-full cursor-pointer hover:bg-[#2546bd]"
-          >
-            <span className="text-base font-semibold text-white">
-              Connect Wallet
-            </span>
-          </button>
+          {!currentAccount && (
+            <button
+              type="button"
+              onClick={connectWallet}
+              className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-3 rounded-full cursor-pointer hover:bg-[#2546bd]"
+            >
+              <span className="text-base font-semibold text-white">
+                Connect Wallet
+              </span>
+            </button>
+          )}
+
           <div className="grid mt-10 sm:grid-cols-3 grid-cols-2w-full">
             <div className={`rounded-tl-2xl ${commonStyles}`}>Reliability</div>
             <div className={commonStyles}>Security</div>
