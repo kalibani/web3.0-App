@@ -27,7 +27,7 @@ export const TransactionsContext = createContext<TransactionsProps>({
   sendTransaction: () => {},
   handleChange: () => {},
 });
-
+// @ts-ignore
 const { ethereum } = window;
 
 const getEthereumContract = () => {
@@ -45,7 +45,7 @@ const getEthereumContract = () => {
     transactionContract,
   });
 };
-
+// @ts-ignore
 export const TransactionProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState("");
   const [formData, setFormData] = useState({
@@ -114,12 +114,12 @@ export const TransactionProvider = ({ children }) => {
     connectWallet,
     currentAccount,
     formData,
-    setFormData,
     handleChange,
     sendTransaction,
   };
 
   return (
+    // @ts-ignore
     <TransactionsContext.Provider value={value}>
       {children}
     </TransactionsContext.Provider>

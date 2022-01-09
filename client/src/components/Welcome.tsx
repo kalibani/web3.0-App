@@ -47,8 +47,9 @@ const Welcome: FunctionComponent<WelcomeProps> = () => {
   } = useContext(TransactionsContext);
 
   const [isLoading, setLoading] = useState(false);
-
+  // @ts-ignore
   const handleSubmit = (e) => {
+    // @ts-ignore
     const { addressTo, amount, keyword, message } = formData;
 
     e.preventDefault();
