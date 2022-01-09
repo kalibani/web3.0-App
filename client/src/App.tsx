@@ -10,9 +10,9 @@ const App: FunctionComponent<AppProps> = () => {
         <Navbar />
         <Welcome />
       </div>
-      <Services />
+      {/* <Services />
       <Transactions />
-      <Footer />
+      <Footer /> */}
     </div>
   );
 };
