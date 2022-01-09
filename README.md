@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This is a repository for application that using Web 3.0 methodologies, Solidity and Metamask
+Krypt - Send Crypto across the world, this application using Web 3.0 methodologies, Solidity and Metamask
 
 ## Usage
 
