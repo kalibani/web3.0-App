@@ -6,7 +6,7 @@ import {
   ReactNode,
   ChangeEvent,
 } from "react";
-import { ethers, providers } from "ethers";
+import { ethers } from "ethers";
 interface TransactionsProps {
   currentAccount?: string;
   connectWallet: React.MouseEventHandler<HTMLButtonElement>;
