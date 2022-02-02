@@ -39,11 +39,7 @@ const getEthereumContract = () => {
     signer
   );
 
-  console.log({
-    provider,
-    signer,
-    transactionContract,
-  });
+  return transactionContract;
 };
 // @ts-ignore
 export const TransactionProvider = ({ children }) => {
@@ -54,6 +50,10 @@ export const TransactionProvider = ({ children }) => {
     keyword: "",
     message: "",
   });
+  const [isLoading, setLoading] = useState(false);
+  const [transactionCount, setTransactionCount] = useState(
+    localStorage.getItem("transactionCount")
+  );
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>, name: string) => {
     setFormData((prevState) => ({
@@ -95,10 +95,44 @@ export const TransactionProvider = ({ children }) => {
   };
 
   const sendTransaction = async () => {
+    console.log("run");
     try {
       if (!ethereum) return alert("Please install Metamask");
       const { addressTo, amount, keyword, message } = formData;
-      getEthereumContract();
+      const transactionContract = getEthereumContract();
+      const parsedAmount = ethers.utils.parseEther(amount);
+
+      console.log(formData);
+      console.log("currentAccount", currentAccount);
+
+      await ethereum.request({
+        method: "eth_sendTransaction",
+        params: [
+          {
+            from: currentAccount,
+            to: addressTo,
+            gas: "0x5208", // 21000 gwei
+            value: parsedAmount._hex, // 0.0001
+          },
+        ],
+      });
+
+      const transactionHash = await transactionContract.addToBlockChain(
+        addressTo,
+        parsedAmount,
+        message,
+        keyword
+      );
+
+      setLoading(true);
+      console.log(`Loading ${transactionHash.hash}`);
+      await transactionHash.wait();
+      setLoading(true);
+      console.log(`Succeess ${transactionHash.hash}`);
+
+      const transactionCount = await transactionContract.getTransactionCount();
+
+      setTransactionCount(transactionCount.toNumber());
     } catch (error) {
       console.log(error);
 

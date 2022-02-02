@@ -4,7 +4,7 @@ import { SiEthereum } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
 import { TransactionsContext } from "../context/TransactionContext";
 import { Loader } from "./";
-import { ethers } from "ethers";
+import { shortenAdress } from "../utils/shortenAddress";
 interface InputProps {
   placeholder?: string;
   props?: object;
@@ -51,9 +51,12 @@ const Welcome: FunctionComponent<WelcomeProps> = () => {
   const handleSubmit = (e) => {
     // @ts-ignore
     const { addressTo, amount, keyword, message } = formData;
+    console.log("test");
 
     e.preventDefault();
     if (!addressTo || !amount || !keyword || !message) return;
+    console.log(formData);
+    console.log("test jalan");
     sendTransaction();
   };
   const commonStyles =
@@ -101,7 +104,9 @@ const Welcome: FunctionComponent<WelcomeProps> = () => {
                 <BsInfoCircle fontSize={17} color="#fff" />
               </div>
               <div>
-                <p className="text-sm font-light text-white">Adress</p>
+                <p className="text-sm font-light text-white">
+                  {shortenAdress(currentAccount)}
+                </p>
                 <p className="mt-1 text-lg font-semibold text-white">
                   Ethereum
                 </p>
