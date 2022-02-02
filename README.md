@@ -1,7 +1,6 @@
-# Krypt - Web 3.0 Blockchain Application
+# [Krypt](https://krypt-web3-react.netlify.app/) - Web 3.0 Blockchain Application
 
 ![Krypt](https://github.com/kalibani/web3.0-App/blob/main/client/src/images/Screen%20Shot%202022-01-09%20at%2018.59.26.png)
-[Try this out](https://krypt-web3-react.netlify.app/)
 
 ## Introduction
 
